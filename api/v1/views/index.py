@@ -18,13 +18,13 @@ def get_status():
 
 @app_views.route('/stats')
     def get_stats():
-        """"""
-    classes = {
-        "amenities": "Amenity",
-        "cities": "City",
-        "places": "Place",
-        "reviews": "Review",
-        "states": "State",
-        "users": "User"
-    }
-    return jsonify(classes)
+        """ Retrieves stats of each obj by type """
+        classes = {
+            "amenities": "Amenity",
+            "cities": "City",
+            "places": "Place",
+            "reviews": "Review",
+            "states": "State",
+            "users": "User"
+        }
+        return jsonify(classes)
