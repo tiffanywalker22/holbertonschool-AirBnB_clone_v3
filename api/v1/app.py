@@ -19,7 +19,10 @@ def teardown_appcontext(close):
     storage.close()
 
 # Set the host and port based on environment variables or use default values
-
+@app.errorhandler(404)
+def not_found(error):
+    """ 404 error """
+    return jsonify({"error": "Not found"}), 404
 
 if __name__ == '__main__':
     host = getenv("HBNB_API_HOST", default="0.0.0.0")
