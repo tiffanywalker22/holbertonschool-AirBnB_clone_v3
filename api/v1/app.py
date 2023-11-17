@@ -2,7 +2,6 @@
 """Main script for running the Flask application."""
 
 from flask import Flask, Blueprint, render_template
-from models import Storage
 from api.v1.views import app_views
 
 app = Flask(__name__)
