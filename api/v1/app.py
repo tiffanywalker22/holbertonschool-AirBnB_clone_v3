@@ -5,6 +5,7 @@ from flask import Flask
 from api.v1.views import app_views
 from models import storage
 from os import getenv
+from flask import jsonify
 
 
 app = Flask(__name__)
@@ -17,6 +18,7 @@ app.register_blueprint(app_views)
 def teardown_appcontext(close):
     """Close the storage when the application context ends."""
     storage.close()
+
 
 # Set the host and port based on environment variables or use default values
 @app.errorhandler(404)
