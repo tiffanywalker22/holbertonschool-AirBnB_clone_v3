@@ -2,7 +2,7 @@
 """Main script for running the Flask application."""
 
 from flask import Flask
-from models import Storage
+from models import storage
 from api.v1.views import app_views
 
 
