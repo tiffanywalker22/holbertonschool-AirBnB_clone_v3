@@ -14,9 +14,6 @@ def get_status():
     return jsonify({"status": "OK"})
 
 
-"""Attach the route to the app_views Blueprint"""
-app_views.add_url_rule('/status', 'get_status', get_status, methods=['GET'])
-
 if __name__ == '__main__':
     from app import app
     app.run(host='0.0.0.0', port=5000, debug=True, threaded=True)
