@@ -2,8 +2,9 @@
 """Main script for running the Flask application."""
 
 from flask import Flask
-from models import Storage
 from api.v1.views import app_views
+from models import Storage
+import os
 
 
 app = Flask(__name__)
