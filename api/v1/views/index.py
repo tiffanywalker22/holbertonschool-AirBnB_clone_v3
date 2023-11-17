@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""Run this script to start the Flask application and expose the '/status' endpoint."""
+"""Run this script to start the Flask application and
+expose the '/status' endpoint."""
 from api.v1.views import app_views
 from flask import jsonify
 
@@ -12,8 +13,3 @@ def get_status():
         Response: JSON response with status "OK".
     """
     return jsonify({"status": "OK"})
-
-
-if __name__ == '__main__':
-    from app import app
-    app.run(host='0.0.0.0', port=5000, debug=True, threaded=True)
