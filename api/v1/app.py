@@ -2,7 +2,7 @@
 """Main script for running the Flask application."""
 
 from flask import Flask, Blueprint, render_template
-import app_views
+
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
