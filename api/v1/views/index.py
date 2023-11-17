@@ -13,8 +13,3 @@ def get_status():
         Response: JSON response with status "OK".
     """
     return jsonify({"status": "OK"})
-
-
-if __name__ == '__main__':
-    from app import app
-    app.run(host='0.0.0.0', port=5000)
