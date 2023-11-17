@@ -14,7 +14,7 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def teardown_appcontext():
+def teardown_appcontext(close):
     """Close the storage when the application context ends."""
     storage.close()
 
@@ -25,4 +25,5 @@ host = os.environ.get('HBNB_API_HOST', '0.0.0.0')
 port = int(os.environ.get('HBNB_API_PORT', 5000))
 
 if __name__ == '__main__':
-    app.run(host=host, port=port, debug=False, threaded=True)
+
+    app.run(host=host, port=port, threaded=True)
