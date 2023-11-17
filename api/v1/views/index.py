@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 """Run this script to start the Flask application and
 expose the '/status' endpoint."""
-from flask import jsonify
 from api.v1.views import app_views
+from flask import jsonify
 
 
-@app_views.route('/status')
+@app_views.route('/status', methods=['GET'])
 def get_status():
     """Handle GET request to the /status endpoint.
 
