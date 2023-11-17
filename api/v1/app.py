@@ -13,4 +13,4 @@ def teardown_appcontext():
     storage.close()
 
 if __name__ == '__main__':
-    app.run(host=HBNB_API_HOST, Port=HBNB_API_PORT, debug=True, threaded=True)
+    app.run(#host=0.0.0.0, port=5000, debug=True, threaded=True)
