@@ -1,13 +1,14 @@
 #!/usr/bin/python3
-"states file "
+"states file"
 from api.v1.views import app_views
 from flask import jsonify, abort, make_response, request
 from models import storage
 from models.state import State
 
+
 @app_views.route('/states', methods=["GET"], strict_slashes=False)
 def state_getter():
-    """ List all of objects of class State """
+    """ List all of objects of class State"""
     list_states = [state.to_dict() for state in storage.all(State).values()]
     return jsonify(list_states)
 
@@ -35,7 +36,7 @@ def delete_state(id):
 
 @app_views.route('/states/', methods=["POST"], strict_slashes=False)
 def create_state():
-    """Create a new state via post using a JSON input, 400 error if not json
+    """Create a new state using a JSON, 400 error if not json
      or if dictionary does not contain name"""
     get_dict = request.get_json(silent=True)
     if get_dict is None:
@@ -49,7 +50,7 @@ def create_state():
 
 @app_views.route("states/<id>", methods=["PUT"], strict_slashes=False)
 def update_state(id):
-    """ Updates a specific state """
+    """Update a specific state"""
     get_dict = request.get_json(silent=True)
     if get_dict is None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
