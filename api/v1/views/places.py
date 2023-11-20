@@ -41,7 +41,7 @@ def delete_place(place_id):
 
 @app_views.route('/cities/<city_id>/places',
                  methods=["POST"], strict_slashes=False)
-def create_place():
+def create_place(city_id):
     """Creates a place"""
     city = storage.get(City, city_id)
     if city is None:
@@ -78,7 +78,7 @@ def update_place(place_id):
     if data is None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
 
-    ignore_list = ["id", "created_at", "updated_at"]
+    ignore_list = ["id", "created_at", "updated_at", "user_id", "city_id"]
     for key, value in data.items():
         if key not in ignore_list:
             setattr(place, key, value)
