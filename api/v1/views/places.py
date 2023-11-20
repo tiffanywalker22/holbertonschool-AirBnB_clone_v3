@@ -56,6 +56,10 @@ def create_place():
     if "name" not in data:
         return make_response(jsonify({"error": "Missing name"}), 400)
 
+    user = storage.get(User, data['user_id'])
+    if user is None:
+        abort(404)
+
     new_place = Place(**data)
     new_place.save()
     return make_response(jsonify(new_place.to_dict()), 201)
