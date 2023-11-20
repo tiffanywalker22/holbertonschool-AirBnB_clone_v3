@@ -24,7 +24,7 @@ def get_place(place_id):
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
-    return jsonify(place.to_dict())
+    return jsonify(place.to_dict() or {})
 
 
 @app_views.route('/places/<place_id>',
@@ -84,4 +84,4 @@ def update_place(place_id):
             setattr(place, key, value)
 
     storage.save()
-    return make_response(jsonify(place.to_dict()), 200)
+    return make_response(jsonify(place.to_dict() or {}), 200)
