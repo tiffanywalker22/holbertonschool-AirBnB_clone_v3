@@ -3,7 +3,7 @@
 Contains the TestDBStorageDocs and TestDBStorage classes
 """
 
-from datetime import datetime
+from datetime import datetime, timedelta
 import inspect
 import models
 from models.engine import db_storage
@@ -18,6 +18,7 @@ import json
 import os
 import pep8
 import unittest
+
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -86,3 +87,15 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_datetime_attributes(self):
+        inst1 = BaseModel()
+
+        # Assuming created_at is initialized the BaseModel instance is created
+        tic = inst1.created_at
+        toc = datetime.now()
+
+        # Assuming that the time difference should not exceed 1 second
+        time_difference = toc - tic
+        self.assertTrue(time_difference <= timedelta(seconds=1))
