@@ -14,6 +14,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from models import storage
 import json
 import os
 import pep8
@@ -99,3 +100,39 @@ class TestFileStorage(unittest.TestCase):
         # Assuming that the time difference should not exceed 1 second
         time_difference = toc - tic
         self.assertTrue(time_difference <= timedelta(seconds=1))
+
+
+class TestDBStorageMethods(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        storage.reload()
+
+    def setUp(self):
+        storage.reload()
+
+    def test_count(self):
+        # Test count method with specific class (e.g., User)
+        user_count = storage.count(User)
+        # Assuming no User objects are present in the storage
+        self.assertEqual(user_count, 0)
+
+        # Test count method without specifying a class
+        total_count = storage.count()
+        # Assuming no objects are present in the storage
+        self.assertEqual(total_count, 0)
+
+    def test_get(self):
+        # Test get method with specific class and existing object
+        user = User()
+        storage.new(user)
+        storage.save()
+        retrieved_user = storage.get(User, user.id)
+        self.assertEqual(retrieved_user, user)
+
+        # Test get method with specific class and non-existing object
+        non_existent_user = storage.get(User, 'non_existent_id')
+        self.assertIsNone(non_existent_user)
+
+        # Test get method with non-existing class
+        non_existent_class = storage.get(NonExistentClass, 'some_id')
+        self.assertIsNone(non_existent_class)
