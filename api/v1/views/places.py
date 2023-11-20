@@ -5,6 +5,7 @@ from flask import jsonify, abort, make_response, request
 from models import storage
 from models.place import Place
 from models.city import City
+from models.user import User
 
 
 @app_views.route('/cities/<city_id>/places', methods=["GET"],
@@ -23,7 +24,7 @@ def get_place(place_id):
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
-    return jsonify(place.to_dict())
+    return jsonify(place.to_dict() or {})
 
 
 @app_views.route('/places/<place_id>',
@@ -40,7 +41,7 @@ def delete_place(place_id):
 
 @app_views.route('/cities/<city_id>/places',
                  methods=["POST"], strict_slashes=False)
-def create_place():
+def create_place(city_id):
     """Creates a place"""
     city = storage.get(City, city_id)
     if city is None:
@@ -55,6 +56,10 @@ def create_place():
 
     if "name" not in data:
         return make_response(jsonify({"error": "Missing name"}), 400)
+
+    user = storage.get(User, data['user_id'])
+    if user is None:
+        abort(404)
 
     new_place = Place(**data)
     new_place.save()
@@ -73,10 +78,10 @@ def update_place(place_id):
     if data is None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
 
-    ignore_list = ["id", "created_at", "updated_at"]
+    ignore_list = ["id", "created_at", "updated_at", "user_id", "city_id"]
     for key, value in data.items():
         if key not in ignore_list:
             setattr(place, key, value)
 
     storage.save()
-    return make_response(jsonify(place.to_dict()), 200)
+    return make_response(jsonify(place.to_dict() or {}), 200)
