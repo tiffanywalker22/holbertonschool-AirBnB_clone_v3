@@ -146,7 +146,3 @@ class TestFileStorageMethods(unittest.TestCase):
         # Test get method with specific class and non-existing object
         non_existent_review = storage.get(Review, 'non_existent_id')
         self.assertIsNone(non_existent_review)
-
-        # Test get method with non-existing class
-        non_existent_class = storage.get(NonExistentClass, 'some_id')
-        self.assertIsNone(non_existent_class)

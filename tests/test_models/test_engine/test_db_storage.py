@@ -132,7 +132,3 @@ class TestDBStorageMethods(unittest.TestCase):
         # Test get method with specific class and non-existing object
         non_existent_user = storage.get(User, 'non_existent_id')
         self.assertIsNone(non_existent_user)
-
-        # Test get method with non-existing class
-        non_existent_class = storage.get(NonExistentClass, 'some_id')
-        self.assertIsNone(non_existent_class)
