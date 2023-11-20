@@ -3,7 +3,7 @@
 Contains the TestFileStorageDocs classes
 """
 
-from datetime import datetime
+from datetime import datetime, timedelta
 import inspect
 import models
 from models.engine import file_storage
@@ -14,6 +14,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from models import storage
 import json
 import os
 import pep8
@@ -113,3 +114,39 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+
+class TestFileStorageMethods(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        storage.reload()
+
+    def setUp(self):
+        storage.reload()
+
+    def test_count(self):
+        # Test count method with specific class (e.g., Review)
+        review_count = storage.count(Review)
+        # Assuming no Review objects are present in the storage
+        self.assertEqual(review_count, 0)
+
+        # Test count method without specifying a class
+        total_count = storage.count()
+        # Assuming no objects are present in the storage
+        self.assertEqual(total_count, 0)
+
+    def test_get(self):
+        # Test get method with specific class and existing object
+        review = Review()
+        storage.new(review)
+        storage.save()
+        retrieved_review = storage.get(Review, review.id)
+        self.assertEqual(retrieved_review, review)
+
+        # Test get method with specific class and non-existing object
+        non_existent_review = storage.get(Review, 'non_existent_id')
+        self.assertIsNone(non_existent_review)
+
+        # Test get method with non-existing class
+        non_existent_class = storage.get(NonExistentClass, 'some_id')
+        self.assertIsNone(non_existent_class)
