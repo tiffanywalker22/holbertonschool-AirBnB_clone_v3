@@ -49,7 +49,6 @@ def create_user():
     if "password" not in data:
         return make_response(jsonify({"error": "Missing password"}), 400)
 
-
     new_user = User(**data)
     new_user.save()
     return make_response(jsonify(new_user.to_dict()), 201)
