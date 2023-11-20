@@ -15,7 +15,8 @@ def get_places_by_city(city_id):
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
-
+    places = [place.to_dict() for place in city.places]
+    return jsonify(places)
 
 @app_views.route('/places/<place_id>',
                  methods=["GET"], strict_slashes=False)
@@ -24,7 +25,8 @@ def get_place(place_id):
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
-    return jsonify(place.to_dict() or {})
+    return jsonify(place.to_dict())
+
 
 
 @app_views.route('/places/<place_id>',
@@ -54,12 +56,11 @@ def create_place(city_id):
     if "user_id" not in data:
         return make_response(jsonify({"error": "Missing user_id"}), 400)
 
+    if User is None:
+        abort(404)
+
     if "name" not in data:
         return make_response(jsonify({"error": "Missing name"}), 400)
-
-    user = storage.get(User, data['user_id'])
-    if user is None:
-        abort(404)
 
     new_place = Place(**data)
     new_place.save()

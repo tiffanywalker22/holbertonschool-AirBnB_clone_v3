@@ -92,7 +92,7 @@ class TestFileStorage(unittest.TestCase):
     def test_datetime_attributes(self):
         inst1 = BaseModel()
 
-        # Assuming created_at is initialized when the BaseModel instance is created
+        # Assuming created_at is initialized the BaseModel instance is created
         tic = inst1.created_at
         toc = datetime.now()
 
